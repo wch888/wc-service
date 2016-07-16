@@ -9,6 +9,19 @@ buildDir "target"
 
 repositories {
     mavenLocal()
+    repositories {
+        mavenLocal()
+        maven {
+            name "sonatype"
+            url "http://repository.sonatype.org/content/groups/public/"
+        }
+        maven {
+            name "maven2"
+            url "http://repo1.maven.org/maven2/"
+        }
+
+        jcenter()
+    }
 }
 apply plugin: 'maven-publish'
 publishing {
