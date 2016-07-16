@@ -56,6 +56,8 @@ dependencies {
     compile 'ch.qos.logback:logback-classic:1.0.1'
     compile 'ch.qos.logback:logback-core:1.0.1'
 
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+
     compile 'net.sf.json-lib:json-lib:2.4:jdk15'
     compile 'com.google.code.gson:gson:2.3'
     compile 'dom4j:dom4j:1.6.1'
