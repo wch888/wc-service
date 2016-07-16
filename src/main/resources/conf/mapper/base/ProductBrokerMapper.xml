@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wc.product.dao.impl.ProductBrokerDaoImpl">
+    <resultMap id="BaseResultMap" type="com.wc.product.bean.ProductBroker">
+        <id column="pid" property="pid" jdbcType="BIGINT"/>
+        <id column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="bespeak_point" property="bespeakPoint" jdbcType="SMALLINT"/>
+        <result column="message_point" property="messagePoint" jdbcType="SMALLINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        pid, user_id, status, nickname, bespeak_point, message_point
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.wc.product.bean.ProductBrokerKey">
+        select
+        <include refid="Base_Column_List"/>
+        from product_broker
+        where pid = #{pid,jdbcType=BIGINT}
+        and user_id = #{userId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.wc.product.bean.ProductBrokerKey">
+    delete from product_broker
+    where pid = #{pid,jdbcType=BIGINT}
+      and user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wc.product.bean.ProductBroker">
+        insert into product_broker (pid, user_id, status,
+        nickname, bespeak_point, message_point
+        )
+        values (#{pid,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{status,jdbcType=SMALLINT},
+        #{nickname,jdbcType=VARCHAR}, #{bespeakPoint,jdbcType=SMALLINT}, #{messagePoint,jdbcType=SMALLINT}
+        )
+  </insert>
+    <insert id="insertSelective" parameterType="com.wc.product.bean.ProductBroker">
+        insert into product_broker
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="bespeakPoint != null">
+                bespeak_point,
+            </if>
+            <if test="messagePoint != null">
+                message_point,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="bespeakPoint != null">
+                #{bespeakPoint,jdbcType=SMALLINT},
+            </if>
+            <if test="messagePoint != null">
+                #{messagePoint,jdbcType=SMALLINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wc.product.bean.ProductBroker">
+        update product_broker
+        <set>
+            <if test="status != null">
+                status = #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="bespeakPoint != null">
+                bespeak_point = #{bespeakPoint,jdbcType=SMALLINT},
+            </if>
+            <if test="messagePoint != null">
+                message_point = #{messagePoint,jdbcType=SMALLINT},
+            </if>
+        </set>
+        where pid = #{pid,jdbcType=BIGINT}
+        and user_id = #{userId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wc.product.bean.ProductBroker">
+    update product_broker
+    set status = #{status,jdbcType=SMALLINT},
+      nickname = #{nickname,jdbcType=VARCHAR},
+        bespeak_point = #{bespeakPoint,jdbcType=SMALLINT},
+        message_point = #{messagePoint,jdbcType=SMALLINT}
+    where pid = #{pid,jdbcType=BIGINT}
+      and user_id = #{userId,jdbcType=BIGINT}
+  </update>
+    <sql id="selectCondition">
+        <where>
+            <trim suffixOverrides="and">
+                <if test="entity != null">
+                    <if test="entity.pid!=null">
+                        and pid = #{entity.pid,jdbcType=BIGINT}
+                    </if>
+                    <if test="entity.userId!=null">
+                        and user_id = #{entity.userId,jdbcType=BIGINT}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from product_broker
+        <include refid="selectCondition"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntity" resultType="java.lang.Integer">
+        select count(*) from product_broker
+        <include refid="selectCondition"/>
+    </select>
+
+</mapper>

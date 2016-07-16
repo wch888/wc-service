@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wc.product.dao.impl.BespeakDaoImpl">
+    <resultMap id="BaseResultMap" type="com.wc.product.bean.Bespeak">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="pid" property="pid" jdbcType="BIGINT"/>
+        <result column="agent_id" property="agentId" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+    </resultMap>
+    <resultMap id="BaseResultMapProduct" type="com.wc.product.bean.BespeakProduct" extends="BaseResultMap">
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="nickname" property="agentName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, mobile, create_time, user_id, pid, agent_id, status
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from bespeak
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from bespeak
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wc.product.bean.Bespeak">
+    insert into bespeak (id, name, mobile,
+        create_time, user_id, pid,
+        agent_id, status)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT},
+        #{agentId,jdbcType=BIGINT}, #{status,jdbcType=SMALLINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wc.product.bean.Bespeak">
+        insert into bespeak
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="agentId != null">
+                agent_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="agentId != null">
+                #{agentId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wc.product.bean.Bespeak">
+        update bespeak
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="agentId != null">
+                agent_id = #{agentId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=SMALLINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wc.product.bean.Bespeak">
+    update bespeak
+    set name = #{name,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=BIGINT},
+        pid = #{pid,jdbcType=BIGINT},
+        agent_id = #{agentId,jdbcType=BIGINT},
+        status = #{status,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <sql id="selectCondition">
+        <where>
+            <trim suffixOverrides="and">
+                <if test=" entity != null">
+                    <if test="entity.userId!=null">
+                        and user_id=#{entity.userId,jdbcType=BIGINT}
+                    </if>
+                    <if test="entity.pid!=null">
+                        and pid=#{entity.pid,jdbcType=BIGINT}
+                    </if>
+                    <if test="entity.status!=null">
+                        and status=#{entity.status,jdbcType=SMALLINT}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfo"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bespeak
+        <include refid="selectCondition"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntity"
+            resultType="java.lang.Integer">
+        select count(*) from bespeak
+        <include refid="selectCondition"/>
+    </select>
+
+    <sql id="selectConditionProduct">
+        <where>
+            b.pid=p.id and b.agent_id=m.id
+            <trim suffixOverrides="and">
+                <if test=" entity != null">
+                    <if test="entity.agentId!=null">
+                        and b.agent_id=#{entity.agentId,jdbcType=BIGINT}
+                    </if>
+                    <if test="entity.title!=null">
+                        and p.name like #{entity.title,jdbcType=VARCHAR}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfoProduct"
+            resultMap="BaseResultMapProduct">
+        select
+        b.id, b.name, b.mobile, b.create_time, b.user_id, b.pid,b.status,p."name" title,m.nickname,m.mobile mobile1
+        from bespeak b,product p,member m
+        <include refid="selectConditionProduct"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntityProduct"
+            resultType="java.lang.Integer">
+        select count(*) from bespeak b,product p,member m
+        <include refid="selectConditionProduct"/>
+    </select>
+
+
+</mapper>

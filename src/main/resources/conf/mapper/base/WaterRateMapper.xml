@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wc.user.dao.impl.WaterRateDaoImpl">
+    <resultMap id="BaseResultMap" type="com.wc.user.bean.WaterRate">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="total" property="total" jdbcType="NUMERIC"/>
+        <result column="amount" property="amount" jdbcType="NUMERIC"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP"/>
+        <result column="nickname" property="userName" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="sewage_amount" property="sewageAmount" jdbcType="NUMERIC"/>
+        <result column="resource_amount" property="resourceAmount" jdbcType="NUMERIC"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="water_amount" property="waterAmount" jdbcType="NUMERIC"/>
+        <result column="community_id" property="communityId" jdbcType="BIGINT" />
+        <result column="month" property="month" jdbcType="TIMESTAMP" />
+        <result column="price" property="price" jdbcType="NUMERIC" />
+        <result column="other" property="other" jdbcType="NUMERIC" />
+        <result column="uuid" property="uuid" jdbcType="OTHER"/>
+    </resultMap>
+    <resultMap id="BaseResultMapMember" type="com.wc.user.bean.WaterRate">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="total" property="total" jdbcType="NUMERIC"/>
+        <result column="amount" property="amount" jdbcType="NUMERIC"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP"/>
+        <result column="mobile" property="userName" jdbcType="VARCHAR"/>
+        <result column="sewage_amount" property="sewageAmount" jdbcType="NUMERIC"/>
+        <result column="resource_amount" property="resourceAmount" jdbcType="NUMERIC"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="water_amount" property="waterAmount" jdbcType="NUMERIC"/>
+        <result column="community_id" property="communityId" jdbcType="BIGINT" />
+        <result column="month" property="month" jdbcType="TIMESTAMP" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="price" property="price" jdbcType="NUMERIC" />
+        <result column="other" property="other" jdbcType="NUMERIC" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, total, amount, create_time, user_id, pay_time, sewage_amount, resource_amount,
+        status, water_amount, community_id, month, price, other, uuid
+    </sql>
+    <sql id="Base_Column_List_Member">
+        w.id, w.total, w.amount, w.create_time, w.user_id,w.status, w.pay_time,w.month,m.nickname,m.mobile,d.address
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from water_rate
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from water_rate
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.wc.user.bean.WaterRate">
+      insert into water_rate (id, total, amount,
+      create_time, user_id, pay_time,
+      sewage_amount, resource_amount, status,
+      water_amount, community_id, month,
+        price, other, uuid)
+    values (#{id,jdbcType=BIGINT}, #{total,jdbcType=NUMERIC}, #{amount,jdbcType=NUMERIC},
+      #{createTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, #{payTime,jdbcType=TIMESTAMP},
+      #{sewageAmount,jdbcType=NUMERIC}, #{resourceAmount,jdbcType=NUMERIC}, #{status,jdbcType=SMALLINT},
+      #{waterAmount,jdbcType=NUMERIC}, #{communityId,jdbcType=BIGINT}, #{month,jdbcType=TIMESTAMP},
+        #{price,jdbcType=NUMERIC}, #{other,jdbcType=NUMERIC}, #{uuid,jdbcType=OTHER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wc.user.bean.WaterRate">
+        insert into water_rate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="total != null">
+                total,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="payTime != null">
+                pay_time,
+            </if>
+            <if test="sewageAmount != null">
+                sewage_amount,
+            </if>
+            <if test="resourceAmount != null">
+                resource_amount,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="waterAmount != null">
+                water_amount,
+            </if>
+            <if test="communityId != null" >
+                community_id,
+            </if>
+            <if test="month != null" >
+                month,
+            </if>
+            <if test="price != null" >
+                price,
+            </if>
+            <if test="other != null" >
+                other,
+            </if>
+            <if test="uuid != null">
+                uuid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="total != null">
+                #{total,jdbcType=NUMERIC},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=NUMERIC},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="payTime != null">
+                #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sewageAmount != null">
+                #{sewageAmount,jdbcType=NUMERIC},
+            </if>
+            <if test="resourceAmount != null">
+                #{resourceAmount,jdbcType=NUMERIC},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="waterAmount != null">
+                #{waterAmount,jdbcType=NUMERIC},
+            </if>
+            <if test="communityId != null" >
+                #{communityId,jdbcType=BIGINT},
+            </if>
+            <if test="month != null" >
+                #{month,jdbcType=TIMESTAMP},
+            </if>
+            <if test="price != null" >
+                #{price,jdbcType=NUMERIC},
+            </if>
+            <if test="other != null" >
+                #{other,jdbcType=NUMERIC},
+            </if>
+            <if test="uuid != null">
+                #{uuid,jdbcType=OTHER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wc.user.bean.WaterRate">
+        update water_rate
+        <set>
+            <if test="total != null">
+                total = #{total,jdbcType=NUMERIC},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=NUMERIC},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="payTime != null">
+                pay_time = #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sewageAmount != null">
+                sewage_amount = #{sewageAmount,jdbcType=NUMERIC},
+            </if>
+            <if test="resourceAmount != null">
+                resource_amount = #{resourceAmount,jdbcType=NUMERIC},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="waterAmount != null">
+                water_amount = #{waterAmount,jdbcType=NUMERIC},
+            </if>
+            <if test="communityId != null" >
+                community_id = #{communityId,jdbcType=BIGINT},
+            </if>
+            <if test="month != null" >
+                month = #{month,jdbcType=TIMESTAMP},
+            </if>
+            <if test="price != null" >
+                price = #{price,jdbcType=NUMERIC},
+            </if>
+            <if test="other != null" >
+                other = #{other,jdbcType=NUMERIC},
+            </if>
+            <if test="uuid != null">
+                uuid = #{uuid,jdbcType=OTHER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wc.user.bean.WaterRate">
+    update water_rate
+    set total = #{total,jdbcType=NUMERIC},
+      amount = #{amount,jdbcType=NUMERIC},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+        user_id = #{userId,jdbcType=BIGINT},
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+        sewage_amount = #{sewageAmount,jdbcType=NUMERIC},
+        resource_amount = #{resourceAmount,jdbcType=NUMERIC},
+        status = #{status,jdbcType=SMALLINT},
+        water_amount = #{waterAmount,jdbcType=NUMERIC},
+      community_id = #{communityId,jdbcType=BIGINT},
+      month = #{month,jdbcType=TIMESTAMP},
+      price = #{price,jdbcType=NUMERIC},
+        other = #{other,jdbcType=NUMERIC},
+        uuid = #{uuid,jdbcType=OTHER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <sql id="selectCondition">
+        <where>
+            <trim suffixOverrides="and">
+                <if test=" entity != null">
+                    <if test="entity.userId!=null">
+                        and user_id=#{entity.userId,jdbcType=INTEGER}
+                    </if>
+                    <if test="entity.communityId!=null">
+                        and community_id=#{entity.communityId,jdbcType=BIGINT}
+                    </if>
+                    <if test="entity.uuid!=null">
+                        and uuid=#{entity.uuid,jdbcType=VARCHAR}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfo"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from water_rate
+        <include refid="selectCondition"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntity"
+            resultType="java.lang.Integer">
+        select count(*) from water_rate
+        <include refid="selectCondition"/>
+    </select>
+
+    <sql id="selectConditionMember">
+        <where>
+            w.user_id=m.id
+            and m.id=d.id
+            <trim suffixOverrides="and">
+                <if test=" entity != null">
+                    <if test="entity.userId!=null">
+                        and w.user_id=#{entity.userId,jdbcType=INTEGER}
+                    </if>
+                    <if test="entity.communityId!=null">
+                        and w.community_id = #{entity.communityId,jdbcType=INTEGER}
+                    </if>
+                    <if test="entity.status!=null">
+                        and w.status = #{entity.status,jdbcType=INTEGER}
+                    </if>
+                    <if test="entity.address!=null">
+                        and d.address like #{entity.address,jdbcType=VARCHAR}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfoMember"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List_Member"/>
+        from water_rate w,member m,member_detail d
+        <include refid="selectConditionMember"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntityMember"
+            resultType="java.lang.Integer">
+        select count(*) from water_rate w,member m,member_detail d
+        <include refid="selectConditionMember"/>
+    </select>
+
+</mapper>

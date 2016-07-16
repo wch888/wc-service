@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wc.product.dao.impl.ProductDaoImpl">
+    <resultMap id="BaseResultMap" type="com.wc.product.bean.Product">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="NUMERIC"/>
+        <result column="area" property="area" jdbcType="BIGINT"/>
+        <result column="city" property="city" jdbcType="BIGINT"/>
+        <result column="province" property="province" jdbcType="BIGINT"/>
+        <result column="location" property="location" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="lng" property="lng" jdbcType="NUMERIC"/>
+        <result column="lat" property="lat" jdbcType="NUMERIC"/>
+        <result column="service" property="service" jdbcType="VARCHAR"/>
+        <result column="discount" property="discount" jdbcType="VARCHAR"/>
+        <result column="default_img" property="defaultImg" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="recommend" property="recommend" jdbcType="SMALLINT" />
+        <result column="consultant" property="consultant" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, price, area, city, province, location, create_time, update_time, user_id,
+    phone, lng, lat, service, discount, default_img, status, start_time, recommend, consultant
+  </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from product
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from product
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.wc.product.bean.Product">
+    insert into product (id, name, price,
+    area, city, province,
+    location, create_time, update_time,
+    user_id, phone, lng,
+    lat, service, discount,
+    default_img, status, start_time,
+      recommend, consultant)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=NUMERIC},
+    #{area,jdbcType=BIGINT}, #{city,jdbcType=BIGINT}, #{province,jdbcType=BIGINT},
+    #{location,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+    #{userId,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, #{lng,jdbcType=NUMERIC},
+    #{lat,jdbcType=NUMERIC}, #{service,jdbcType=VARCHAR}, #{discount,jdbcType=VARCHAR},
+    #{defaultImg,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, #{startTime,jdbcType=TIMESTAMP},
+      #{recommend,jdbcType=SMALLINT}, #{consultant,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.wc.product.bean.Product">
+        insert into product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="area != null">
+                area,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="location != null">
+                location,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="lng != null">
+                lng,
+            </if>
+            <if test="lat != null">
+                lat,
+            </if>
+            <if test="service != null">
+                service,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+            <if test="defaultImg != null">
+                default_img,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="recommend != null" >
+                recommend,
+            </if>
+            <if test="consultant != null" >
+                consultant,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=NUMERIC},
+            </if>
+            <if test="area != null">
+                #{area,jdbcType=BIGINT},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=BIGINT},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=BIGINT},
+            </if>
+            <if test="location != null">
+                #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="lng != null">
+                #{lng,jdbcType=NUMERIC},
+            </if>
+            <if test="lat != null">
+                #{lat,jdbcType=NUMERIC},
+            </if>
+            <if test="service != null">
+                #{service,jdbcType=VARCHAR},
+            </if>
+            <if test="discount != null">
+                #{discount,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultImg != null">
+                #{defaultImg,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="recommend != null" >
+                #{recommend,jdbcType=SMALLINT},
+            </if>
+            <if test="consultant != null" >
+                #{consultant,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wc.product.bean.Product">
+        update product
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=NUMERIC},
+            </if>
+            <if test="area != null">
+                area = #{area,jdbcType=BIGINT},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=BIGINT},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=BIGINT},
+            </if>
+            <if test="location != null">
+                location = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="lng != null">
+                lng = #{lng,jdbcType=NUMERIC},
+            </if>
+            <if test="lat != null">
+                lat = #{lat,jdbcType=NUMERIC},
+            </if>
+            <if test="service != null">
+                service = #{service,jdbcType=VARCHAR},
+            </if>
+            <if test="discount != null">
+                discount = #{discount,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultImg != null">
+                default_img = #{defaultImg,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="recommend != null" >
+                recommend = #{recommend,jdbcType=SMALLINT},
+            </if>
+            <if test="consultant != null" >
+                consultant = #{consultant,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wc.product.bean.Product">
+    update product
+    set name = #{name,jdbcType=VARCHAR},
+    price = #{price,jdbcType=NUMERIC},
+    area = #{area,jdbcType=BIGINT},
+    city = #{city,jdbcType=BIGINT},
+    province = #{province,jdbcType=BIGINT},
+    location = #{location,jdbcType=VARCHAR},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    user_id = #{userId,jdbcType=BIGINT},
+    phone = #{phone,jdbcType=VARCHAR},
+    lng = #{lng,jdbcType=NUMERIC},
+    lat = #{lat,jdbcType=NUMERIC},
+    service = #{service,jdbcType=VARCHAR},
+    discount = #{discount,jdbcType=VARCHAR},
+    default_img = #{defaultImg,jdbcType=VARCHAR},
+    status = #{status,jdbcType=SMALLINT},
+    start_time = #{startTime,jdbcType=TIMESTAMP},
+      recommend = #{recommend,jdbcType=SMALLINT},
+      consultant = #{consultant,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <sql id="selectCondition">
+        <where>
+            <trim suffixOverrides="and">
+                <if test="entity != null">
+                    <if test="entity.name!=null">
+                        and name like #{entity.name,jdbcType=VARCHAR}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from product
+        <include refid="selectCondition"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntity" resultType="java.lang.Integer">
+        select count(*) from product
+        <include refid="selectCondition"/>
+    </select>
+
+
+    <sql id="selectConditionDto">
+        <where>
+            <trim suffixOverrides="and">
+                <if test="entity != null">
+                    <if test="entity.name!=null">
+                        and name like #{entity.name,jdbcType=VARCHAR}
+                    </if>
+                    <if test="entity.priceMax!=null">
+                        and price <![CDATA[<=]]> #{entity.priceMax,jdbcType=NUMERIC}
+                    </if>
+                    <if test="entity.priceMin!=null">
+                        and price <![CDATA[>=]]> #{entity.priceMin,jdbcType=NUMERIC}
+                    </if>
+                    <if test="entity.city!=null">
+                        and city = #{entity.city,jdbcType=BIGINT}
+                    </if>
+                    <if test="entity.area!=null">
+                        and area = #{entity.area,jdbcType=BIGINT}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfoDto" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from product
+        <include refid="selectConditionDto"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntityDto" resultType="java.lang.Integer">
+        select count(*) from product
+        <include refid="selectConditionDto"/>
+    </select>
+
+    <sql id="selectConditionBespeak">
+        <where>
+            p.id=b.pid
+            <trim suffixOverrides="and">
+                <if test="entity != null">
+                    <if test="entity.userId!=null">
+                        and b.user_id = #{entity.userId,jdbcType=BIGINT}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfoBespeak" resultMap="BaseResultMap">
+        select
+        p.id, p.name, p.price, p.area, p.city, p.province, p.location, p.create_time, update_time, b.user_id,
+        p.phone, p.lng, p.lat, p.service, p.discount, p.default_img, p.status, start_time
+        from product p,bespeak b
+        <include refid="selectConditionBespeak"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntityBespeak" resultType="java.lang.Integer">
+        select count(*) from product p,bespeak b
+        <include refid="selectConditionBespeak"/>
+    </select>
+
+
+</mapper>

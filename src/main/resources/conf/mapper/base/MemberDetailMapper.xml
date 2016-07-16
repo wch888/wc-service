@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wc.user.dao.impl.MemberDetailDaoImpl">
+    <resultMap id="BaseResultMap" type="com.wc.user.bean.MemberDetail">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="city_id" property="cityId" jdbcType="BIGINT"/>
+        <result column="community_id" property="communityId" jdbcType="BIGINT"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="host_phone" property="hostPhone" jdbcType="VARCHAR"/>
+        <result column="birth_date" property="birthDate" jdbcType="TIMESTAMP"/>
+        <result column="id_card" property="idCard" jdbcType="VARCHAR"/>
+        <result column="img" property="img" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="SMALLINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, city_id, community_id, address, host_phone, birth_date, id_card, img, gender
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from member_detail
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from member_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wc.user.bean.MemberDetail">
+    insert into member_detail (id, city_id, community_id, 
+      address, host_phone, birth_date,
+        id_card, img, gender
+        )
+        values (#{id,jdbcType=BIGINT}, #{cityId,jdbcType=BIGINT}, #{communityId,jdbcType=BIGINT},
+        #{address,jdbcType=VARCHAR}, #{hostPhone,jdbcType=VARCHAR}, #{birthDate,jdbcType=TIMESTAMP},
+        #{idCard,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, #{gender,jdbcType=SMALLINT}
+        )
+  </insert>
+    <insert id="insertSelective" parameterType="com.wc.user.bean.MemberDetail">
+        insert into member_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="cityId != null">
+                city_id,
+            </if>
+            <if test="communityId != null">
+                community_id,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="hostPhone != null">
+                host_phone,
+            </if>
+            <if test="birthDate != null">
+                birth_date,
+            </if>
+            <if test="idCard != null">
+                id_card,
+            </if>
+            <if test="img != null">
+                img,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="cityId != null">
+                #{cityId,jdbcType=BIGINT},
+            </if>
+            <if test="communityId != null">
+                #{communityId,jdbcType=BIGINT},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="hostPhone != null">
+                #{hostPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="birthDate != null">
+                #{birthDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="idCard != null">
+                #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="img != null">
+                #{img,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=SMALLINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wc.user.bean.MemberDetail">
+        update member_detail
+        <set>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=BIGINT},
+            </if>
+            <if test="communityId != null">
+                community_id = #{communityId,jdbcType=BIGINT},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="hostPhone != null">
+                host_phone = #{hostPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="birthDate != null">
+                birth_date = #{birthDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="idCard != null">
+                id_card = #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="img != null">
+                img = #{img,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=SMALLINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wc.user.bean.MemberDetail">
+        update member_detail
+    set city_id = #{cityId,jdbcType=BIGINT},
+      community_id = #{communityId,jdbcType=BIGINT},
+      address = #{address,jdbcType=VARCHAR},
+      host_phone = #{hostPhone,jdbcType=VARCHAR},
+      birth_date = #{birthDate,jdbcType=TIMESTAMP},
+      id_card = #{idCard,jdbcType=VARCHAR},
+        img = #{img,jdbcType=VARCHAR},
+        gender = #{gender,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <sql id="selectCondition">
+        <where>
+            <trim suffixOverrides="and">
+                <if test="entity != null">
+                    <if test="entity.communityId!=null">
+                        and community_id=#{entity.communityId,jdbcType=BIGINT}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from member_detail
+        <include refid="selectCondition"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntity" resultType="java.lang.Integer">
+        select count(*) from member_detail
+        <include refid="selectCondition"/>
+    </select>
+</mapper>

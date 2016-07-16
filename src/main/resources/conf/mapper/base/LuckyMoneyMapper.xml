@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wc.user.dao.impl.LuckyMoneyDaoImpl">
+    <resultMap id="BaseResultMap" type="com.wc.user.bean.LuckyMoney">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="stock" property="stock" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="pid" property="pid" jdbcType="BIGINT"/>
+        <result column="money" property="money" jdbcType="NUMERIC"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+    </resultMap>
+    <resultMap id="BaseResultMapProduct" type="com.wc.user.bean.LuckyMoneyProduct" extends="BaseResultMap">
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, stock, create_time, start_time, end_time, pid, money, status
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from lucky_money
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from lucky_money
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wc.user.bean.LuckyMoney">
+    insert into lucky_money (id, stock, create_time,
+    start_time, end_time, pid,
+        money, status)
+    values (#{id,jdbcType=BIGINT}, #{stock,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+    #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{pid,jdbcType=BIGINT},
+        #{money,jdbcType=NUMERIC}, #{status,jdbcType=SMALLINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wc.user.bean.LuckyMoney">
+        insert into lucky_money
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="stock != null">
+                stock,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="stock != null">
+                #{stock,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=NUMERIC},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wc.user.bean.LuckyMoney">
+        update lucky_money
+        <set>
+            <if test="stock != null">
+                stock = #{stock,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=NUMERIC},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=SMALLINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wc.user.bean.LuckyMoney">
+    update lucky_money
+    set stock = #{stock,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      pid = #{pid,jdbcType=BIGINT},
+        money = #{money,jdbcType=NUMERIC},
+        status = #{status,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <sql id="selectCondition">
+        <where>
+            <trim suffixOverrides="and">
+                <if test="entity != null">
+                    <if test="entity.pid!=null">
+                        and pid=#{entity.pid,jdbcType=VARCHAR}
+                    </if>
+                    <if test="entity.status!=null">
+                        and status=#{entity.status,jdbcType=SMALLINT}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from lucky_money
+        <include refid="selectCondition"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntity" resultType="java.lang.Integer">
+        select count(*) from lucky_money
+        <include refid="selectCondition"/>
+    </select>
+
+    <sql id="selectConditionProduct">
+        <where>
+            l.pid = P . ID
+            <trim suffixOverrides="and">
+                <if test="entity != null">
+                    <if test="entity.pid!=null">
+                        and pid=#{entity.pid,jdbcType=VARCHAR}
+                    </if>
+                    <if test="entity.status!=null">
+                        and status=#{entity.status,jdbcType=SMALLINT}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfoProduct" resultMap="BaseResultMapProduct">
+        select
+        l.id, l.stock, l.create_time, l.start_time, l.end_time, pid, l.money, l.status,
+        p."name" title
+        from lucky_money l,product p
+        <include refid="selectConditionProduct"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntityProduct" resultType="java.lang.Integer">
+        select count(*) from lucky_money l,product p
+        <include refid="selectConditionProduct"/>
+    </select>
+
+</mapper>

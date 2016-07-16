@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wc.user.dao.impl.WalletDaoImpl">
+    <resultMap id="BaseResultMap" type="com.wc.user.bean.Wallet">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="integration" property="integration" jdbcType="BIGINT"/>
+        <result column="money" property="money" jdbcType="NUMERIC"/>
+    </resultMap>
+    <resultMap id="BaseResultMapMember" type="com.wc.user.bean.Wallet">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="integration" property="integration" jdbcType="BIGINT"/>
+        <result column="money" property="money" jdbcType="NUMERIC"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, integration, money
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from wallet
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from wallet
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wc.user.bean.Wallet">
+    insert into wallet (id, integration, money
+      )
+    values (#{id,jdbcType=BIGINT}, #{integration,jdbcType=BIGINT}, #{money,jdbcType=NUMERIC}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.wc.user.bean.Wallet">
+        insert into wallet
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="integration != null">
+                integration,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="integration != null">
+                #{integration,jdbcType=BIGINT},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=NUMERIC},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wc.user.bean.Wallet">
+        update wallet
+        <set>
+            <if test="integration != null">
+                integration = #{integration,jdbcType=BIGINT},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=NUMERIC},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wc.user.bean.Wallet">
+    update wallet
+    set integration = #{integration,jdbcType=BIGINT},
+      money = #{money,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <sql id="selectCondition">
+        <where>
+            <trim suffixOverrides="and">
+                <if test=" entity != null">
+                    <!--<if test="entity.userId!=null">-->
+                    <!--and user_id=#{entity.userId,jdbcType=INTEGER}-->
+                    <!--</if>-->
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfo"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wallet
+        <include refid="selectCondition"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntity"
+            resultType="java.lang.Integer">
+        select count(*) from wallet
+        <include refid="selectCondition"/>
+    </select>
+
+    <sql id="selectConditionMember">
+        <where>
+            w.id=m.id
+            <trim suffixOverrides="and">
+                <if test=" entity != null">
+
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfoMember"
+            resultMap="BaseResultMapMember">
+        select w.id,w.integration,w.money,m.mobile,m.nickname
+        from wallet w,member m
+        <include refid="selectConditionMember"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntityMember"
+            resultType="java.lang.Integer">
+        select count(*) from wallet w,member m
+        <include refid="selectConditionMember"/>
+    </select>
+
+</mapper>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wc.user.dao.impl.MessageDaoImpl">
+    <resultMap id="BaseResultMap" type="com.wc.user.bean.Message">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="receive_id" property="receiveId" jdbcType="BIGINT"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="sender_id" property="senderId" jdbcType="BIGINT"/>
+        <result column="receiver_name" property="receiverName" jdbcType="VARCHAR"/>
+        <result column="receiver_head" property="receiverHead" jdbcType="VARCHAR"/>
+        <result column="sender_name" property="senderName" jdbcType="VARCHAR"/>
+        <result column="sender_head" property="senderHead" jdbcType="VARCHAR"/>
+        <result column="pid" property="pid" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, receive_id, content, create_time, sender_id, pid
+  </sql>
+    <sql id="Base_Column_List_ext">
+        message.id, receive_id, content, message.create_time, sender_id,
+    receive.nickname receiver_name,receive.head receiver_head,send.nickName sender_name,send.head sender_head
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from message
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from message
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.wc.user.bean.Message">
+        insert into message (id, receive_id, content,
+        create_time, sender_id, status,
+        pid)
+        values (#{id,jdbcType=BIGINT}, #{receiveId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{senderId,jdbcType=BIGINT}, #{status,jdbcType=SMALLINT},
+        #{pid,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wc.user.bean.Message">
+        insert into message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="receiveId != null">
+                receive_id,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="senderId != null">
+                sender_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="receiveId != null">
+                #{receiveId,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="senderId != null">
+                #{senderId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wc.user.bean.Message">
+        update message
+        <set>
+            <if test="receiveId != null">
+                receive_id = #{receiveId,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="senderId != null">
+                sender_id = #{senderId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wc.user.bean.Message">
+    update message
+    set receive_id = #{receiveId,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+        sender_id = #{senderId,jdbcType=BIGINT},
+        status = #{status,jdbcType=SMALLINT},
+        pid = #{pid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <sql id="selectCondition">
+        <where>
+            message.receive_id=receive.id and message.sender_id=send.id
+            <trim suffixOverrides="and">
+                <if test="entity != null">
+                    <if test="entity.all!=null">
+                        and (sender_id=#{entity.all,jdbcType=INTEGER}
+                        or receive_id=#{entity.all,jdbcType=INTEGER}
+                        )
+
+                    </if>
+                    <if test="entity.receiveId!=null">
+                        and receive.id=#{entity.receiveId,jdbcType=INTEGER}
+                    </if>
+                    <if test="entity.senderId!=null">
+                        and sender_id=#{entity.senderId,jdbcType=INTEGER}
+                    </if>
+                    <if test="entity.pid!=null">
+                        and pid=#{entity.pid,jdbcType=INTEGER}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List_ext"/>
+        from message,"member" receive,"member" send
+        <include refid="selectCondition"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntity" resultType="java.lang.Integer">
+        select count(*) from message,"member" receive,"member" send
+        <include refid="selectCondition"/>
+    </select>
+
+</mapper>

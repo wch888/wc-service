@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wc.product.dao.impl.ProductDetailDaoImpl" >
+  <resultMap id="BaseResultMap" type="com.wc.product.bean.ProductDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="decorate" property="decorate" jdbcType="VARCHAR" />
+    <result column="house_count" property="houseCount" jdbcType="VARCHAR" />
+    <result column="plot_ratio" property="plotRatio" jdbcType="VARCHAR" />
+    <result column="greening_rate" property="greeningRate" jdbcType="VARCHAR" />
+    <result column="parking_space" property="parkingSpace" jdbcType="VARCHAR" />
+    <result column="video" jdbcType="VARCHAR" property="video" />
+    <result column="age" property="age" jdbcType="VARCHAR"/>
+    <result column="video_360" property="video360" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, company, decorate, house_count, plot_ratio, greening_rate, parking_space, video,
+    age, video_360
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from product_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from product_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wc.product.bean.ProductDetail" >
+    insert into product_detail (id, company, decorate, 
+      house_count, plot_ratio, greening_rate,
+    parking_space, video, age,
+    video_360)
+    values (#{id,jdbcType=BIGINT}, #{company,jdbcType=VARCHAR}, #{decorate,jdbcType=VARCHAR},
+      #{houseCount,jdbcType=VARCHAR}, #{plotRatio,jdbcType=VARCHAR}, #{greeningRate,jdbcType=VARCHAR},
+    #{parkingSpace,jdbcType=VARCHAR}, #{video,jdbcType=VARCHAR}, #{age,jdbcType=VARCHAR},
+      #{video360,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wc.product.bean.ProductDetail" >
+    insert into product_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="decorate != null" >
+        decorate,
+      </if>
+      <if test="houseCount != null" >
+        house_count,
+      </if>
+      <if test="plotRatio != null" >
+        plot_ratio,
+      </if>
+      <if test="greeningRate != null" >
+        greening_rate,
+      </if>
+      <if test="parkingSpace != null" >
+        parking_space,
+      </if>
+      <if test="video != null">
+        video,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="video360 != null" >
+        video_360,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="decorate != null" >
+        #{decorate,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCount != null" >
+        #{houseCount,jdbcType=VARCHAR},
+      </if>
+      <if test="plotRatio != null" >
+        #{plotRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="greeningRate != null" >
+        #{greeningRate,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingSpace != null" >
+        #{parkingSpace,jdbcType=VARCHAR},
+      </if>
+      <if test="video != null">
+        #{video,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="video360 != null" >
+        #{video360,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wc.product.bean.ProductDetail" >
+    update product_detail
+    <set >
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="decorate != null" >
+        decorate = #{decorate,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCount != null" >
+        house_count = #{houseCount,jdbcType=VARCHAR},
+      </if>
+      <if test="plotRatio != null" >
+        plot_ratio = #{plotRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="greeningRate != null" >
+        greening_rate = #{greeningRate,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingSpace != null" >
+        parking_space = #{parkingSpace,jdbcType=VARCHAR},
+      </if>
+      <if test="video != null">
+        video = #{video,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="video360 != null" >
+        video_360 = #{video360,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wc.product.bean.ProductDetail" >
+    update product_detail
+    set company = #{company,jdbcType=VARCHAR},
+      decorate = #{decorate,jdbcType=VARCHAR},
+      house_count = #{houseCount,jdbcType=VARCHAR},
+      plot_ratio = #{plotRatio,jdbcType=VARCHAR},
+      greening_rate = #{greeningRate,jdbcType=VARCHAR},
+      parking_space = #{parkingSpace,jdbcType=VARCHAR},
+    video = #{video,jdbcType=VARCHAR},
+    age = #{age,jdbcType=VARCHAR},
+      video_360 = #{video360,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

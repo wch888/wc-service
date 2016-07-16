@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wc.user.dao.impl.PowerRateDaoImpl">
+    <resultMap id="BaseResultMap" type="com.wc.user.bean.PowerRate">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="total" property="total" jdbcType="NUMERIC"/>
+        <result column="amount" property="amount" jdbcType="NUMERIC"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="mobile" property="userName" jdbcType="VARCHAR"/>
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP"/>
+        <result column="level1" property="level1" jdbcType="NUMERIC"/>
+        <result column="level2" property="level2" jdbcType="NUMERIC"/>
+        <result column="status" property="status" jdbcType="SMALLINT" />
+        <result column="community_id" property="communityId" jdbcType="BIGINT" />
+        <result column="month" property="month" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, total, amount, create_time, user_id, pay_time, level1, level2, status, community_id,
+    month
+    </sql>
+    <sql id="Base_Column_List_Member">
+        a.id, a.total, a.amount, a.create_time, a.user_id,a.pay_time,m.mobile
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from power_rate
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from power_rate
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.wc.user.bean.PowerRate">
+       insert into power_rate (id, total, amount,
+      create_time, user_id, pay_time,
+      level1, level2, status,
+      community_id, month)
+    values (#{id,jdbcType=BIGINT}, #{total,jdbcType=NUMERIC}, #{amount,jdbcType=NUMERIC},
+      #{createTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, #{payTime,jdbcType=TIMESTAMP},
+      #{level1,jdbcType=NUMERIC}, #{level2,jdbcType=NUMERIC}, #{status,jdbcType=SMALLINT},
+      #{communityId,jdbcType=BIGINT}, #{month,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wc.user.bean.PowerRate">
+        insert into power_rate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="total != null">
+                total,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="payTime != null">
+                pay_time,
+            </if>
+            <if test="level1 != null">
+                level1,
+            </if>
+            <if test="level2 != null">
+                level2,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="communityId != null" >
+                community_id,
+            </if>
+            <if test="month != null" >
+                month,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="total != null">
+                #{total,jdbcType=NUMERIC},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=NUMERIC},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="payTime != null">
+                #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="level1 != null">
+                #{level1,jdbcType=NUMERIC},
+            </if>
+            <if test="level2 != null">
+                #{level2,jdbcType=NUMERIC},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="communityId != null" >
+                #{communityId,jdbcType=BIGINT},
+            </if>
+            <if test="month != null" >
+                #{month,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wc.user.bean.PowerRate">
+        update power_rate
+        <set>
+            <if test="total != null">
+                total = #{total,jdbcType=NUMERIC},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=NUMERIC},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="payTime != null">
+                pay_time = #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="level1 != null">
+                level1 = #{level1,jdbcType=NUMERIC},
+            </if>
+            <if test="level2 != null">
+                level2 = #{level2,jdbcType=NUMERIC},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="communityId != null" >
+                community_id = #{communityId,jdbcType=BIGINT},
+            </if>
+            <if test="month != null" >
+                month = #{month,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wc.user.bean.PowerRate">
+    update power_rate
+    set total = #{total,jdbcType=NUMERIC},
+      amount = #{amount,jdbcType=NUMERIC},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+        user_id = #{userId,jdbcType=BIGINT},
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+        level1 = #{level1,jdbcType=NUMERIC},
+        level2 = #{level2,jdbcType=NUMERIC},
+      status = #{status,jdbcType=SMALLINT},
+      community_id = #{communityId,jdbcType=BIGINT},
+      month = #{month,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <sql id="selectCondition">
+        <where>
+            <trim suffixOverrides="and">
+                <if test=" entity != null">
+                    <if test="entity.userId!=null">
+                        and user_id=#{entity.userId,jdbcType=BIGINT}
+                    </if>
+                    <if test="entity.communityId!=null">
+                        and community_id=#{entity.communityId,jdbcType=BIGINT}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfo"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from power_rate
+        <include refid="selectCondition"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntity"
+            resultType="java.lang.Integer">
+        select count(*) from power_rate
+        <include refid="selectCondition"/>
+    </select>
+
+    <sql id="selectConditionMember">
+        <where>
+            a.user_id=m.id
+            <trim suffixOverrides="and">
+                <if test=" entity != null">
+                    <if test="entity.userId!=null">
+                        and a.user_id=#{entity.userId,jdbcType=INTEGER}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfoMember"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List_Member"/>
+        from power_rate a,member m
+        <include refid="selectConditionMember"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntityMember"
+            resultType="java.lang.Integer">
+        select count(*) from power_rate a,member m
+        <include refid="selectCondition"/>
+    </select>
+
+</mapper>

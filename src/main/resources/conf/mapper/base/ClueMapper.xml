@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wc.product.dao.impl.ClueDaoImpl">
+    <resultMap id="BaseResultMap" type="com.wc.product.bean.Clue">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="pid" property="pid" jdbcType="BIGINT"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="tip" property="tip" jdbcType="VARCHAR"/>
+        <result column="agent_id" property="agentId" jdbcType="BIGINT" />
+    </resultMap>
+    <resultMap id="BaseResultMapMember" type="com.wc.product.bean.Clue">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="pid" property="pid" jdbcType="BIGINT"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="tip" property="tip" jdbcType="VARCHAR"/>
+        <result column="agent_id" property="agentId" jdbcType="BIGINT" />
+        <result column="agent_name" property="agentName" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, mobile, create_time, user_id, pid, content, status, tip, agent_id
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from clue
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from clue
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wc.product.bean.Clue">
+    insert into clue (id, name, mobile, 
+      create_time, user_id, pid,
+      content, status, tip,
+      agent_id)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT},
+      #{content,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, #{tip,jdbcType=VARCHAR},
+      #{agentId,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wc.product.bean.Clue">
+        insert into clue
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="tip != null">
+                tip,
+            </if>
+            <if test="agentId != null" >
+                agent_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="tip != null">
+                #{tip,jdbcType=VARCHAR},
+            </if>
+            <if test="agentId != null" >
+                #{agentId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wc.product.bean.Clue">
+        update clue
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="tip != null">
+                tip = #{tip,jdbcType=VARCHAR},
+            </if>
+            <if test="agentId != null" >
+                agent_id = #{agentId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wc.product.bean.Clue">
+    update clue
+    set name = #{name,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=BIGINT},
+      pid = #{pid,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
+        status = #{status,jdbcType=SMALLINT},
+        tip = #{tip,jdbcType=VARCHAR},
+      agent_id = #{agentId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <sql id="selectCondition">
+        <where>
+            <trim suffixOverrides="and">
+                <if test=" entity != null">
+                    <if test="entity.userId!=null">
+                        and user_id=#{entity.userId,jdbcType=INTEGER}
+                    </if>
+                    <if test="entity.status!=null">
+                        and status=#{entity.status,jdbcType=SMALLINT}
+                    </if>
+                    <if test="entity.name!=null">
+                        and name like #{entity.name,jdbcType=VARCHAR}
+                    </if>
+                    <if test="entity.mobile!=null">
+                        and mobile like #{entity.mobile,jdbcType=VARCHAR}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfo"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from clue
+        <include refid="selectCondition"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntity"
+            resultType="java.lang.Integer">
+        select count(*) from clue
+        <include refid="selectCondition"/>
+    </select>
+
+    <sql id="selectConditionMember">
+        <where>
+            c.agent_id=a.id and c.user_id=m.id
+            <trim suffixOverrides="and">
+                <if test=" entity != null">
+                    <if test="entity.userId!=null">
+                        and c.user_id=#{entity.userId,jdbcType=INTEGER}
+                    </if>
+                    <if test="entity.status!=null">
+                        and c.status=#{entity.status,jdbcType=SMALLINT}
+                    </if>
+                    <if test="entity.name!=null">
+                        and c.name like #{entity.name,jdbcType=VARCHAR}
+                    </if>
+                    <if test="entity.mobile!=null">
+                        and c.mobile like #{entity.mobile,jdbcType=VARCHAR}
+                    </if>
+                    <if test="entity.agentId!=null">
+                        and c.agentId = #{entity.agentId,jdbcType=INTEGER}
+                    </if>
+                </if>
+            </trim>
+            <trim suffixOverrides="and">
+                <if test="whereSql!=null">
+                    and ${whereSql}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 根据条件查询 -->
+    <select id="getListByEntityAndPageInfoMember"
+            resultMap="BaseResultMapMember">
+        select
+        C . ID,
+        C . NAME,
+        C .mobile,
+        C .create_time,
+        C .user_id,
+        C .pid,
+        C . CONTENT,
+        C .status,
+        C .tip,
+        C .agent_id,
+        a .nickname agent_name,
+        m.nickname user_name
+        from clue c, member a,member m
+        <include refid="selectConditionMember"/>
+        <if test="orderBy!=null">
+            ${orderBy}
+        </if>
+        <if test="pageInfo!=null">
+            limit ${pageInfo.pagesize} offset ${pageInfo.startIndex}
+        </if>
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getTotalByEntityMember"
+            resultType="java.lang.Integer">
+        select count(*)  from clue c, MEMBER a,member m
+        <include refid="selectConditionMember"/>
+    </select>
+
+
+</mapper>
