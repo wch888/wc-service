@@ -13,7 +13,7 @@ repositories {
         mavenLocal()
         maven {
             name "sonatype"
-            url "http://repository.sonatype.org/content/groups/public/"
+            url "http://localhost:8081/nexus/content/groups/public/"
         }
         maven {
             name "maven2"
