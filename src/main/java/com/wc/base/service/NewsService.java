@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Created by rubi on 13-12-29.
+ * 
  */
 @Service
 public class NewsService {
@@ -26,7 +26,8 @@ public class NewsService {
      * @return id 主键
      */
     public long add(News news) {
-        return newsDao.insert(news);
+         newsDao.insert(news);
+         return news.getId();
     }
 
     public int delete(long id) {
