@@ -27,7 +27,7 @@
         delete from news
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.wc.base.bean.News">
+    <insert id="insert"  useGeneratedKeys="true" keyProperty="id" parameterType="com.wc.base.bean.News">
         insert into news (id, title, description,
         thumb, create_time, update_time,
         author, content, status,
@@ -37,7 +37,7 @@
         #{author,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT},
         #{pid,jdbcType=BIGINT})
     </insert>
-    <insert id="insertSelective" parameterType="com.wc.base.bean.News">
+    <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.wc.base.bean.News">
         insert into news
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
