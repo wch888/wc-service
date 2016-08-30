@@ -199,6 +199,9 @@
                     <if test="entity.userId!=null">
                         and i.user_id=#{entity.userId,jdbcType=INTEGER}
                     </if>
+                    <if test="entity.type!=null">
+                        and i.type=#{entity.type,jdbcType=VARCHAR}
+                    </if>
                     <if test="entity.nickname!=null">
                         and m.nickname like #{entity.nickname,jdbcType=VARCHAR}
                     </if>
