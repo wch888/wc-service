@@ -159,6 +159,9 @@
                     <if test="entity.userId!=null">
                         and user_id=#{entity.userId,jdbcType=INTEGER}
                     </if>
+                     <if test="entity.type!=null">
+                        and type=#{entity.type,jdbcType=VARCHAR}
+                    </if>
                 </if>
             </trim>
             <trim suffixOverrides="and">
